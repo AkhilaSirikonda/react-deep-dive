@@ -1,9 +1,24 @@
-function App(){
-return (
-  <div>
-    <h1>React App hosted by Akhila Sirikonda</h1>
-  </div>
-)
-}
+import { useState } from 'react';
+import Header from './components/Header';
 
-export default App;
+export default function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  return (
+    <div style={{ backgroundColor: isDarkMode ? '#121212' : '#fff', minHeight: '100vh' }}>
+      <Header
+        authorName="Akhila Sirikonda"
+        repoUrl="https://github.com/AkhilaSirikonda/react-deep-dive"
+        isDarkMode={isDarkMode}
+        onToggleTheme={() => setIsDarkMode(!isDarkMode)}
+        onSearch={(query) => setSearchQuery(query)}
+      />
+
+      <main style={{ padding: '24px', color: isDarkMode ? '#fff' : '#000' }}>
+        <h2>Current Search: {searchQuery || 'None'}</h2>
+        <p>Welcome to your React + TypeScript deep dive guide!</p>
+      </main>
+    </div>
+  );
+}
