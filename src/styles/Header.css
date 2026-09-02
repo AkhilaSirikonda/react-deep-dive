@@ -1,44 +1,38 @@
+/* Parent Flex Container */
 .header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: center;            /* Vertically centers all 3 main items */
+  justify-content: space-between; /* Spreads items left, middle, right */
   padding: 12px 24px;
+  gap: 16px;                      /* Ensures items don't collide */
   border-bottom: 1px solid #ccc;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.header-light {
-  background-color: #ffffff;
-  color: #000000;
-}
-
-.header-dark {
-  background-color: #1a1a1a;
-  color: #ffffff;
-}
-
+/* 1. Brand Section Flex Alignment */
 .brand {
   display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
+  align-items: center;            /* Vertically centers logo, title, and badge */
+  gap: 10px;                     /* Horizontal space between brand elements */
+  white-space: nowrap;            /* Prevents brand text from wrapping */
 }
 
 .title {
   margin: 0;
   font-size: 1.1rem;
+  font-weight: 600;
 }
 
+.author-badge {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* 2. Search Bar Flex Sizing */
 .search-container {
-  flex: 1;
-  max-width: 300px;
-  margin: 0 20px;
+  flex: 1;                        /* Grows to take up available middle space */
+  max-width: 360px;               /* Keeps search bar from getting too wide */
+  margin: 0 16px;
 }
 
 .search-input {
@@ -46,28 +40,59 @@
   padding: 8px 12px;
   border-radius: 6px;
   border: 1px solid #aaa;
+  box-sizing: border-box;
 }
 
+/* 3. Nav Actions Flex Alignment */
 .nav {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  align-items: center;            /* Vertically centers theme button and link */
+  gap: 16px;                     /* Horizontal space between controls */
+  white-space: nowrap;
 }
 
-.nav-link {
+/* Light / Dark Mode Colors */
+.header-light {
+  background-color: #ffffff;
+  color: #000000;
+  border-bottom-color: #e5e5e5;
+}
+
+.header-dark {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border-bottom-color: #333333;
+}
+
+.header-dark .search-input {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border-color: #444444;
+}
+
+.github-profile-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: inherit;
   text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap; /* Prevents text from breaking onto next line */
 }
 
-.theme-button {
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  border: none;
-  background-color: #eee;
-  color: inherit;
+/* Restricts the photo size */
+.profile-avatar {
+  width: 32px;              /* Standard avatar width */
+  height: 32px;             /* Standard avatar height */
+  max-width: 32px;          /* Guarantees image cannot exceed width */
+  max-height: 32px;         /* Guarantees image cannot exceed height */
+  border-radius: 50%;       /* Crops image into a perfect circle */
+  object-fit: cover;        /* Clips edges cleanly without stretching */
+  border: 1.5px solid #ccc;
+  flex-shrink: 0;           /* Prevents flex container from squishing image */
 }
 
-.header-dark .theme-button {
-  background-color: #333;
+.header-dark .profile-avatar {
+  border-color: #555555;
 }

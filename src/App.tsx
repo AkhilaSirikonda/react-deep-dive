@@ -4,11 +4,12 @@ import Header from './components/Header';
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const authorName = "Akhila Sirikonda";
 
   return (
     <div style={{ backgroundColor: isDarkMode ? '#121212' : '#fff', minHeight: '100vh' }}>
       <Header
-        authorName="Akhila Sirikonda"
+        authorName={authorName}
         repoUrl="https://github.com/AkhilaSirikonda/react-deep-dive"
         isDarkMode={isDarkMode}
         onToggleTheme={() => setIsDarkMode(!isDarkMode)}
