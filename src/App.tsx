@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Header from './components/Header';
+import Sidebar from './components/Sidebar';
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -19,6 +20,7 @@ export default function App() {
       <main style={{ padding: '24px', color: isDarkMode ? '#fff' : '#000' }}>
         <h2>Current Search: {searchQuery || 'None'}</h2>
         <p>Welcome to your React + TypeScript deep dive guide!</p>
+        <Sidebar/>
       </main>
     </div>
   );
