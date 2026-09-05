@@ -1,8 +1,16 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 
 interface User {
     id: number,
     user: String,
+}
+interface Recipe {
+    id: number;
+    name: string;
+    prepTimeMinutes: number;
+    servings: number;
+    image: string;
+    cuisine: string;
 }
 function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +18,11 @@ function Sidebar() {
     // const [user, setUser] = useState<User[] | null>(null);
     const [liked, setLiked] = useState(true);
     const [text, setText] = useState('Akhila');
+
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
     useEffect(() => {
         count
     }, [setIsOpen])
@@ -17,9 +30,27 @@ function Sidebar() {
     setText(e.target.value);
 };
 
+useEffect(()=>{
+    fetch('https://dummyjson.com/recipes')
+        .then((res) => {
+            if(!res.ok) throw new Error('Network response failed');
+            return res.json()
+        })
+        .then((data) => {
+            setRecipes(data.recipes);
+            setLoading(false);
+        })
+        .catch((err) => {
+            setError(err.message);
+            setLoading(false);
+        })
+}, []);
+
 const handleLikedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLiked(e.target.checked);
 };
+    if (loading) return <div>Loading recipe cards...</div>;
+    if (error) return <div>Error loading recipes: {error}</div>;
     return (
         <>
         <div>
@@ -60,6 +91,28 @@ const handleLikedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         </label>
         <p>You {liked ? 'liked' : 'did not like'} this with input text as {text}.</p>
         </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', padding: '16px' }}>
+      {recipes.slice(0, 6).map((recipe) => (
+        <div
+          key={recipe.id}
+          style={{
+            border: '1px solid #ccc',
+            borderRadius: '8px',
+            padding: '12px',
+            width: '200px',
+          }}
+        >
+          <img
+            src={recipe.image}
+            alt={recipe.name}
+            style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '4px' }}
+          />
+          <h3 style={{ fontSize: '16px', margin: '8px 0 4px' }}>{recipe.name}</h3>
+          <p style={{ color: '#666', fontSize: '14px', margin: 0 }}>{recipe.cuisine}</p>
+          <small>{recipe.prepTimeMinutes} mins prep</small>
+        </div>
+      ))}
+    </div>
         </>
         
     );
