@@ -13,16 +13,19 @@ function Sidebar() {
     useEffect(() => {
         count
     }, [setIsOpen])
-    function handleChange(e) {
-        setText(e.target.value);
-        setLiked(e.target.checked);
-    }
+    const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+};
+
+const handleLikedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLiked(e.target.checked);
+};
     return (
         <>
         <div>
             <input 
             value={text}
-            onChange= {handleChange}
+            onChange= {handleTextChange}
             >
             </input>
         </div>
@@ -51,11 +54,11 @@ function Sidebar() {
             <input
             type="checkbox"
             checked={liked}
-            onChange={handleChange}
+            onChange={handleLikedChange}
             />
             I liked this
         </label>
-        <p>You {liked ? 'liked' : 'did not like'} this.</p>
+        <p>You {liked ? 'liked' : 'did not like'} this with input text as {text}.</p>
         </div>
         </>
         
