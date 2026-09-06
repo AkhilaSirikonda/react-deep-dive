@@ -25,7 +25,7 @@ export default function App() {
         <h2>Current Search: {searchQuery || 'None'}</h2>
         <p>Welcome to your React + TypeScript deep dive guide!</p>
         <h2><u>useEffect & useState</u></h2>
-        <Sidebar/>
+        <Sidebar searchQuery={searchQuery}/>
         <h2><u>useContext</u></h2>
         <Discount/>
       </main>

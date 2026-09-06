@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 
 interface User {
     id: number,
@@ -12,7 +12,10 @@ interface Recipe {
     image: string;
     cuisine: string;
 }
-function Sidebar() {
+interface SidebarProps {
+    searchQuery: string;
+}
+function Sidebar({ searchQuery }: SidebarProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [count, setCount] = useState(0);
     // const [user, setUser] = useState<User[] | null>(null);
@@ -26,9 +29,9 @@ function Sidebar() {
     useEffect(() => {
         count
     }, [setIsOpen])
-    const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
-};
+//     const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setText(e.target.value);
+// };
 
 useEffect(()=>{
     fetch('https://dummyjson.com/recipes')
@@ -50,6 +53,21 @@ useEffect(()=>{
 const handleLikedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLiked(e.target.checked);
 };
+
+const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+
+const filteredRecipes = useMemo(() => {
+    if (!searchQuery.trim()) return recipes;
+
+    return recipes.filter(
+      (recipe) =>
+        recipe.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        recipe.cuisine.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [recipes, searchQuery]);
+
     if (loading) return <div>Loading recipe cards...</div>;
     if (error) return <div>Error loading recipes: {error}</div>;
     return (
@@ -117,23 +135,34 @@ const handleLikedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         </div>        
       ))}
         </div>
-        {/* <div
-        style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', padding: '16px' }}>
-            <h1>recipes </h1>
-            {recipes.slice(0,30).map((recipe) => (
-                <div>
-                        <h2 
-                        style={{ fontSize: '16px', margin: '8px 0 4px' }}>recipe{recipe.id} from {recipe.cuisine} </h2>
-                        <img 
-                        src = {recipe.image}
-                        alt = {recipe.name}
-                        style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '4px' }}
-                        ></img>
-                </div>
-            )
-            )}
-        </div> */}
-        </>
+        {/* Recipe Gallery */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', padding: '16px' }}>
+        {filteredRecipes.length === 0 ? (
+          <p>No recipes found matching "{searchQuery}"</p>
+        ) : (
+          filteredRecipes.map((recipe) => (
+            <div
+              key={recipe.id}
+              style={{
+                border: '1px solid #ccc',
+                borderRadius: '8px',
+                padding: '12px',
+                width: '200px',
+              }}
+            >
+              <img
+                src={recipe.image}
+                alt={recipe.name}
+                style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '4px' }}
+              />
+              <h3 style={{ fontSize: '16px', margin: '8px 0 4px' }}>{recipe.name}</h3>
+              <p style={{ color: '#666', fontSize: '14px', margin: 0 }}>{recipe.cuisine}</p>
+              <small>{recipe.prepTimeMinutes} mins prep</small>
+            </div>
+          ))
+        )}
+      </div>
+      </>
         
     );
 }
