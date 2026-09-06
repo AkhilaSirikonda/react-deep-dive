@@ -39,6 +39,7 @@ useEffect(()=>{
         .then((data) => {
             setRecipes(data.recipes);
             setLoading(false);
+            console.log(recipes);
         })
         .catch((err) => {
             setError(err.message);
@@ -91,7 +92,10 @@ const handleLikedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         </label>
         <p>You {liked ? 'liked' : 'did not like'} this with input text as {text}.</p>
         </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', padding: '16px' }}>
+        <div 
+        style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', padding: '16px' }}>
+        {/* To check data inside the recipes */}
+        {console.log(recipes)}
       {recipes.slice(0, 6).map((recipe) => (
         <div
           key={recipe.id}
@@ -110,9 +114,25 @@ const handleLikedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           <h3 style={{ fontSize: '16px', margin: '8px 0 4px' }}>{recipe.name}</h3>
           <p style={{ color: '#666', fontSize: '14px', margin: 0 }}>{recipe.cuisine}</p>
           <small>{recipe.prepTimeMinutes} mins prep</small>
-        </div>
+        </div>        
       ))}
-    </div>
+        </div>
+        {/* <div
+        style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', padding: '16px' }}>
+            <h1>recipes </h1>
+            {recipes.slice(0,30).map((recipe) => (
+                <div>
+                        <h2 
+                        style={{ fontSize: '16px', margin: '8px 0 4px' }}>recipe{recipe.id} from {recipe.cuisine} </h2>
+                        <img 
+                        src = {recipe.image}
+                        alt = {recipe.name}
+                        style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '4px' }}
+                        ></img>
+                </div>
+            )
+            )}
+        </div> */}
         </>
         
     );
