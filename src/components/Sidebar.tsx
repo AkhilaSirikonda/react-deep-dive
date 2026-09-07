@@ -29,9 +29,27 @@ function Sidebar({ searchQuery }: SidebarProps) {
     useEffect(() => {
         count
     }, [setIsOpen])
+
 //     const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 //     setText(e.target.value);
 // };
+
+// useMemo example
+// const menuList = [
+//   { id: 1, name: 'Chicken Curry' },
+//   { id: 2, name: 'Beef Tacos' },
+//   { id: 3, name: 'Chicken Noodle Soup' }
+// ];
+
+// const query = "CHICKEN";
+
+// const filteredMenu = useMemo(() => {
+//   return menuList.filter((recipe) =>
+//     recipe.name.toLowerCase().includes(query.toLowerCase())
+//   );
+// }, [query]);
+
+// Result: [{ id: 1, name: 'Chicken Curry' }, { id: 3, name: 'Chicken Noodle Soup' }]
 
 useEffect(()=>{
     fetch('https://dummyjson.com/recipes')

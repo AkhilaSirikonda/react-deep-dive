@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Timer from './components/Timer';
 import Discount from './components/Discount';
+import PracticeReact from './components/PracticeReact';
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -28,6 +29,8 @@ export default function App() {
         <Sidebar searchQuery={searchQuery}/>
         <h2><u>useContext</u></h2>
         <Discount/>
+        <PracticeReact items={[]} />
+        {/* ['Akhi', 'divi', 'chint'] as never[] */}
       </main>
 
       <footer>
@@ -38,3 +41,4 @@ export default function App() {
     </div>
   );
 }
+
